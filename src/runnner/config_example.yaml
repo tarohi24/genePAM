@@ -1,0 +1,42 @@
+parameters:
+    # 一度に複数の上位トピック, 下位トピックを指定できます. 例えば
+    #
+    #   super_min: 2
+    #   super_max: 4
+    #   sub_min: 20
+    #   sub_max: 21
+    #
+    # と設定すると, (上位トピック, 下位トピック) = [(2, 20), (3, 20), (4, 20), (2, 21), (3, 21), (4, 21)]
+    # の6通りの計算が実行されます.
+    super_min: 2
+    super_max: 2
+    sub_min: 3
+    sub_max: 3
+    # Gibbs サンプリングでのイテレーション数を設定します. この数が大きいほど実行時間がかかります.
+    # 十分な精度を得るためには5000~10000ほどの値が推奨されます.
+    num_iterations: 10000
+
+data:
+    # 計算するデータが含まれているディレクトリと, 各ファイル名を指定します.
+    # 詳しくは doc/data.md を見てください.
+    # 例えば, データファイルが
+    #
+    #   dir: '/Users/wataru/IdeaProjects/genePAM/data'
+    #   data: 'data.txt'
+    #   genes: 'genes.txt'
+    #
+    # と指定すると, 
+    dir: '/Users/wataru/IdeaProjects/genePAM/data'
+    data: 'data.txt'
+    genes: 'genes.txt'
+
+output:
+    dir: '/Users/wataru/tmp'
+    super: 'super.txt'
+    sub: 'sub.txt'
+    model: 'model.txt'
+    words: 'words.txt'
+
+run:
+    jar: '/Users/wataru/IdeaProjects/genePAM/out/artifacts/genePAM_jar/genePAM.jar'
+    log: './log.txt'
