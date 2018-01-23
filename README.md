@@ -4,6 +4,7 @@
 This is a package for clustering cells, using Pachinko Allocation Model[1].
 
 ## Requirements
+**[We have a docker image](https://github.com/tarohi24/genePAM-docker)!** We recommend using this docker image.
 *We will distribute a docker image soon.*
 
 To install manually, the followings are needed.
