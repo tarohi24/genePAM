@@ -545,7 +545,7 @@ public class PAM4L {
 		return superSubWeights;
 	}
 
-    private static double[] calculateDirichletDist(int[] assignmentsOfWordTopics, int numOfTopics) {
+    public static double[] calculateDirichletDist(int[] assignmentsOfWordTopics, int numOfTopics) {
         int[] counts = new int[numOfTopics];
         int wordCount = assignmentsOfWordTopics.length;
         Arrays.fill(counts, 0);
@@ -564,7 +564,7 @@ public class PAM4L {
             .collect(Collectors.joining(","));
     }
 
-    private String distToString(int[] dist) {
+    public static String distToString(int[] dist) {
         return Arrays.stream(dist)
             .mapToObj(String::valueOf)
             .collect(Collectors.joining(","));
