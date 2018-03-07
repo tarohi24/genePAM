@@ -14,5 +14,6 @@ public class LDA extends ExpTopicModel{
     public LDA(ExpData expData, int numOfTopics, File thetaOutput, File phiOutput) {
         super(expData);
         this.tm = new ParallelTopicModel(numOfTopics, thetaOutput, phiOutput);
+        this.tm.addInstances(this.instances);
     }
 }

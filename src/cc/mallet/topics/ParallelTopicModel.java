@@ -773,21 +773,17 @@ public class ParallelTopicModel implements Serializable {
 				}
 
 				// ファイルに記録
-				PrintWriter printWriter = new PrintWriter(this.phiOutput);
+				PrintWriter pw1 = new PrintWriter(this.thetaOutput);
 				for (int i = 0; i < numTopics; i++) {
-					printWriter.println(PAM4L.distToString(topicDocCounts[i]));
+					pw1.println(PAM4L.distToString(topicDocCounts[i]));
 				}
-				printWriter.close();
+				pw1.close();
 
-				printWriter = new PrintWriter(this.phiOutput);
-
-
+				PrintWriter pw2 = new PrintWriter(this.phiOutput);
 				for (int i = 0; i < this.typeTopicCounts.length; i++) {
-					String string = PAM4L.distToString(this.typeTopicCounts[i]);
-					printWriter.println(string);
+					pw2.println(PAM4L.distToString(typeTopicCounts[i]));
 				}
-
-				printWriter.close();
+				pw2.close();
 			}
 		}
 
@@ -1052,7 +1048,6 @@ public class ParallelTopicModel implements Serializable {
 
 	/**
 	 *  @param out		  A print writer
-	 *  @param count      Print this number of top documents
 	 */
 	public void printTopicDocuments (PrintWriter out, int max)	{
 		out.println("#topic doc name proportion ...");

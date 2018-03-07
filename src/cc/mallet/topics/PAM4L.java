@@ -13,6 +13,7 @@ import cc.mallet.util.Randoms;
 import java.util.Arrays;
 import java.io.*;
 import java.text.NumberFormat;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -565,9 +566,10 @@ public class PAM4L {
     }
 
     public static String distToString(int[] dist) {
-        return Arrays.stream(dist)
+        String[] distString = Arrays.stream(dist)
             .mapToObj(String::valueOf)
-            .collect(Collectors.joining(","));
+            .toArray(String[]::new);
+        return String.join(",", distString);
     }
 
 
