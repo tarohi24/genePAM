@@ -15,9 +15,9 @@ public class PAM extends ExpTopicModel {
 		this.pam4L = new PAM4L(superTopics, subTopics, superTopicOutput, subTopicOutput, superSubWeightsOutput, wordOutput);
 	}
 
-	public PAM4L estimate(int numIterations, String[] genes) throws IOException {
+	public PAM4L estimate(int numIterations, int burninPeriod, String[] genes) throws IOException {
 		int seed = (int) System.currentTimeMillis(); // 現在時刻のミリ秒
-		this.pam4L.estimate(this.instances, numIterations, 1, 100,
+		this.pam4L.estimate(this.instances, numIterations, burninPeriod, 100, 100,
 			new Randoms(seed), genes);
 
 		System.out.println("Calculating Topic Dist...");

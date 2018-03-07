@@ -649,10 +649,6 @@ public class ParallelTopicModel implements Serializable {
 
 			long iterationStart = System.currentTimeMillis();
 
-			if (showTopicsInterval != 0 && iteration != 0 && iteration % showTopicsInterval == 0) {
-				logger.info("\n" + displayTopWords (wordsPerTopic, false));
-			}
-
 			if (saveStateInterval != 0 && iteration % saveStateInterval == 0) {
 				this.printState(new File(stateFilename + '.' + iteration));
 			}
@@ -772,18 +768,22 @@ public class ParallelTopicModel implements Serializable {
 					logger.info ("<" + iteration + ">");
 				}
 
+			}
+
+			if (iteration % 100 == 0) {
+
 				// ファイルに記録
 				PrintWriter pw1 = new PrintWriter(this.thetaOutput);
-				for (int i = 0; i < numTopics; i++) {
-					pw1.println(PAM4L.distToString(topicDocCounts[i]));
+				for (int i = 0; i < data.size(); i++) {
+					pw1.println(PAM4L.distToString(this.getTheta()[i]));
 				}
 				pw1.close();
 
-				PrintWriter pw2 = new PrintWriter(this.phiOutput);
-				for (int i = 0; i < this.typeTopicCounts.length; i++) {
-					pw2.println(PAM4L.distToString(typeTopicCounts[i]));
-				}
-				pw2.close();
+//				PrintWriter pw2 = new PrintWriter(this.phiOutput);
+//				for (int i = 0; i < this.typeTopicCounts.length; i++) {
+//					pw2.println(PAM4L.distToString(typeTopicCounts[i]));
+//				}
+//				pw2.close();
 			}
 		}
 
@@ -805,9 +805,9 @@ public class ParallelTopicModel implements Serializable {
 	}
 
 	private double[][] getTheta() {
-		return (double[][]) java.util.stream.IntStream.rangeClosed(1, this.data.size()).mapToObj(
+		return java.util.stream.IntStream.rangeClosed(0, this.data.size()-1).mapToObj(
 				(n) -> this.getTopicProbabilities(n)
-		).toArray();
+		).toArray(double[][]::new);
 	}
 
 

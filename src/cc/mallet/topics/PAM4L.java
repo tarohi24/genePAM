@@ -75,6 +75,8 @@ public class PAM4L {
     final File superSubWeightOutput;
     final File wordOutput;
 
+    int burninPeriod;
+
     public PAM4L (int superTopics, int subTopics, File superTopicOutput, File subTopicOutput,
                   File superSubWeightOutput, File wordOutput) {
         this (superTopics, subTopics, 50.0, 0.001, superTopicOutput, subTopicOutput,
@@ -112,7 +114,7 @@ public class PAM4L {
         runtime = Runtime.getRuntime();
     }
 
-    public void estimate(InstanceList documents, int numIterations, int optimizeInterval, int outputModelInterval,
+    public void estimate(InstanceList documents, int numIterations, int burninPeriod, int optimizeInterval, int outputModelInterval,
                          Randoms r, String[] genes) throws IOException {
         ilist = documents;
         numTypes = ilist.getDataAlphabet().size ();
@@ -559,7 +561,7 @@ public class PAM4L {
             .toArray();
     }
 
-    private String distToString(double[] dist) {
+    public static String distToString(double[] dist) {
         return Arrays.stream(dist)
             .mapToObj(String::valueOf)
             .collect(Collectors.joining(","));

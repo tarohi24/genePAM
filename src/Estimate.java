@@ -16,25 +16,26 @@ public class Estimate {
 			model.tm.setNumThreads(numOfThreads);
 			model.tm.setBurninPeriod(Integer.parseInt(args[6]));
 			model.tm.estimate();
-		} else if (args.length == 9){
+		} else if (args.length == 10){
 			int numSuperTopics = Integer.parseInt(args[0]);
 			int numSubTopics = Integer.parseInt(args[1]);
 			int numIterations = Integer.parseInt(args[2]);
+			int burninPeriod = Integer.parseInt(args[3]);
 
-			File data = new File(args[3]);
-			File genes = new File(args[4]);
+			File data = new File(args[4]);
+			File genes = new File(args[5]);
 
-			File superTopicOutput = new File(args[5]);
-			File subTopicOutput = new File(args[6]);
+			File superTopicOutput = new File(args[6]);
+			File subTopicOutput = new File(args[7]);
 
-			File superSubWeightsOutput = new File(args[7]);
-			File wordOutput = new File(args[8]);
+			File superSubWeightsOutput = new File(args[8]);
+			File wordOutput = new File(args[9]);
 
 
 			ExpData expData = new ExpData(data, genes);
 			PAM model = new PAM(expData, numSuperTopics, numSubTopics, superTopicOutput, subTopicOutput, superSubWeightsOutput, wordOutput);
 
-			model.estimate(numIterations, expData.getGenes());
+			model.estimate(numIterations, burninPeriod, expData.getGenes());
 		} else {
 			System.err.println("Args number is invalid.");
 			System.exit(1);
