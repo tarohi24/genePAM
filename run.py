@@ -13,6 +13,11 @@ def run(is_pam=True):
         topics = [(int(i), int(j)) for i, j in conf['topics']]
     else:
         topics = [int(i) for i in conf['topics']]
+
+    if (not is_pam) and (len(topics) != len(conf['n_burnin'])):
+        print('set burn-in period for each topic')
+        return
+
     n_iter = conf['num_iterations']
 
     datadir = './data/' + conf['dataset']
@@ -47,7 +52,7 @@ def run(is_pam=True):
             procs.append(subprocess.Popen(' '.join(cmd), shell=True))
 
     else:
-        for t in topics:
+        for i, t in enumerate(topics):
             cmd = ['java',
                    '-Xmx{0:d}g'.format(mem_limit) if mem_limit != -1 else '',
                    '-jar',
@@ -58,7 +63,7 @@ def run(is_pam=True):
                    outputfile_fmt.format(t, 'theta.txt'),
                    outputfile_fmt.format(t, 'phi.txt'),
                    str(conf['n_thread']),
-                   str(conf['n_burnin'])]
+                   str(conf['n_burnin'][i])]
             print(' '.join(cmd))
             procs.append(subprocess.Popen(' '.join(cmd), shell=True))
 
