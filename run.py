@@ -56,7 +56,9 @@ def run(is_pam=True):
                    datafile,
                    genefile,
                    outputfile_fmt.format(t, 'theta.txt'),
-                   outputfile_fmt.format(t, 'phi.txt')]
+                   outputfile_fmt.format(t, 'phi.txt'),
+                   str(conf['n_thread']),
+                   str(conf['n_burnin'])]
             print(' '.join(cmd))
             procs.append(subprocess.Popen(' '.join(cmd), shell=True))
 
@@ -65,5 +67,5 @@ def run(is_pam=True):
 
 
 if __name__ == '__main__':
-    is_pam = False if sys.argv[1] == 'LDA' else True
+    is_pam = False if sys.argv[1] == 'lda' else True
     run(is_pam)
