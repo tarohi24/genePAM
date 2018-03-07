@@ -3,7 +3,7 @@ import java.io.IOException;
 
 public class Estimate {
 	public static void main(String[] args) throws IOException {
-		if (args.length == 5) {
+		if (args.length == 6) {
 			// LDA
 			int numOfTopics = Integer.parseInt(args[0]);
 			File data = new File(args[1]);
