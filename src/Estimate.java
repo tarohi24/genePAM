@@ -10,8 +10,10 @@ public class Estimate {
 			File genes = new File(args[2]);
 			File thetaOutput = new File(args[3]);
 			File phiOutput = new File(args[4]);
+			int numOfThreads = Integer.parseInt(args[5]);
 			ExpData expData = new ExpData(data, genes);
 			LDA model = new LDA(expData, numOfTopics, thetaOutput, phiOutput);
+			model.tm.setNumThreads(numOfThreads);
 			model.tm.estimate();
 		} else if (args.length == 9){
 			int numSuperTopics = Integer.parseInt(args[0]);
