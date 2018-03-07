@@ -3,7 +3,7 @@ import java.io.IOException;
 
 public class Estimate {
 	public static void main(String[] args) throws IOException {
-		if (args.length == 6) {
+		if (args.length == 7) {
 			// LDA
 			int numOfTopics = Integer.parseInt(args[0]);
 			File data = new File(args[1]);
@@ -14,6 +14,7 @@ public class Estimate {
 			ExpData expData = new ExpData(data, genes);
 			LDA model = new LDA(expData, numOfTopics, thetaOutput, phiOutput);
 			model.tm.setNumThreads(numOfThreads);
+			model.tm.setBurninPeriod(Integer.parseInt(args[6]));
 			model.tm.estimate();
 		} else if (args.length == 9){
 			int numSuperTopics = Integer.parseInt(args[0]);
