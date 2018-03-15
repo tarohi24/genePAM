@@ -90,6 +90,8 @@ public class ParallelTopicModel implements Serializable {
 	public NumberFormat formatter;
 	public boolean printLogLikelihood = true;
 
+	int writeFileInterval = 100;
+
 	// The number of times each type appears in the corpus
 	int[] typeTotals;
 	// The max over typeTotals, used for beta optimization
@@ -190,6 +192,10 @@ public class ParallelTopicModel implements Serializable {
 		if (saveSampleInterval > optimizeInterval) {
 			saveSampleInterval = optimizeInterval;
 		}
+	}
+
+	public void setWriteFileInterval(int writeFileInterval) {
+		this.writeFileInterval = writeFileInterval;
 	}
 
 	public void setNumThreads(int threads) {
@@ -308,7 +314,7 @@ public class ParallelTopicModel implements Serializable {
 				if (currentValue == 0) {
 					// new value is 1, so we don't have to worry about sorting
 					//  (except by topic suffix, which doesn't matter)
-					
+
 					currentTypeTopicCounts[index] =
 						(1 << topicBits) + topic;
 				}
@@ -770,7 +776,7 @@ public class ParallelTopicModel implements Serializable {
 
 			}
 
-			if (iteration % 100 == 0) {
+			if (iteration % writeFileInterval == 0) {
 
 				// ファイルに記録
 				PrintWriter pw1 = new PrintWriter(this.thetaOutput);
@@ -779,11 +785,11 @@ public class ParallelTopicModel implements Serializable {
 				}
 				pw1.close();
 
-//				PrintWriter pw2 = new PrintWriter(this.phiOutput);
-//				for (int i = 0; i < this.typeTopicCounts.length; i++) {
-//					pw2.println(PAM4L.distToString(typeTopicCounts[i]));
-//				}
-//				pw2.close();
+				PrintWriter pw2 = new PrintWriter(this.phiOutput);
+				for (int i = 0; i < this.typeTopicCounts.length; i++) {
+					pw2.println(PAM4L.distToString(typeTopicCounts[i]));
+				}
+				pw2.close();
 			}
 		}
 

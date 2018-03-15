@@ -1,9 +1,11 @@
+import com.sun.deploy.util.StringUtils;
+
 import java.io.File;
 import java.io.IOException;
 
 public class Estimate {
 	public static void main(String[] args) throws IOException {
-		if (args.length == 7) {
+		if (args.length == 8) {
 			// LDA
 			int numOfTopics = Integer.parseInt(args[0]);
 			File data = new File(args[1]);
@@ -14,7 +16,10 @@ public class Estimate {
 			ExpData expData = new ExpData(data, genes);
 			LDA model = new LDA(expData, numOfTopics, thetaOutput, phiOutput);
 			model.tm.setNumThreads(numOfThreads);
-			model.tm.setBurninPeriod(Integer.parseInt(args[6]));
+			int numIterations = Integer.parseInt(args[6]);
+			model.tm.setNumIterations(numIterations);
+			model.tm.setWriteFileInterval(numIterations / 50);
+			model.tm.setBurninPeriod(Integer.parseInt(args[7]));
 			model.tm.estimate();
 		} else if (args.length == 10){
 			int numSuperTopics = Integer.parseInt(args[0]);
